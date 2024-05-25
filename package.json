@@ -4,9 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "pm2 start telegram-bot/bot.js --name telegram-bot",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "pm2": "^5.1.2",
+    "node-telegram-bot-api": "^0.50.0"
+  }
 }
