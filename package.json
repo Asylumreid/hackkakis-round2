@@ -12,6 +12,6 @@
   "license": "ISC",
   "dependencies": {
     "pm2": "^5.1.2",
-    "node-telegram-bot-api": "9.6.7"
+    "node-telegram-bot-api": "^0.50.0"
   }
 }
