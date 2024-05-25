@@ -1,18 +1,22 @@
 {
   "name": "telegram-bot",
   "version": "1.0.0",
-  "description": "",
+  "description": "A Telegram bot built with Node.js",
   "main": "index.js",
   "scripts": {
-    "preinstall": "npm install -g pm2",
-    "start": "pm2 start bot.js --name telegram-bot",
+    "preinstall": "npm install",
+    "start": "npx pm2 start bot.js --name telegram-bot",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["telegram", "bot", "nodejs"],
+  "author": "Your Name",
   "license": "ISC",
   "dependencies": {
     "pm2": "^5.1.2",
     "node-telegram-bot-api": "^0.50.0"
+  },
+  "engines": {
+    "node": "18.17.0",
+    "npm": "9.6.7"
   }
 }
