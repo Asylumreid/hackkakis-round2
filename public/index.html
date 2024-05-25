@@ -3,91 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Maps Directions API Test</title>
+    <title>Public Transport Directions</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1m9McL3PqhSK6FsWzi_zm9deqHBmEpd4&libraries=places"></script>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        #floating-panel {
+            position: absolute;
+            top: 10px;
+            left: 25%;
+            z-index: 5;
+            background-color: #fff;
+            padding: 10px;
+            border: 1px solid #999;
+            text-align: center;
+            font-family: 'Roboto', 'sans-serif';
+            line-height: 30px;
+            padding-left: 10px;
+        }
+        #right-panel {
+            height: 100%;
+            float: right;
+            width: 100%;
+            overflow: auto;
+        }
+    </style>
 </head>
-    <div id="results"></div>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1m9McL3PqhSK6FsWzi_zm9deqHBmEpd4"></script> 
 <body>
-  <div id="floating-panel">
-    <strong>Start:</strong>
-    <input type="text" id="start" placeholder="Enter start location">
-    <br><br>
-    <strong>End:</strong>
-    <input type="text" id="end" placeholder="Enter end location">
-    <br><br>
-    <strong>Mode of Travel:</strong>
-    <select id="mode">
-      <option value="DRIVING">Driving</option>
-      <option value="WALKING">Walking</option>
-      <option value="BICYCLING">Bicycling</option>
-      <option value="TRANSIT">Transit</option>
-    </select>
-    <br><br>
-    <input type="button" value="Get Directions" onclick="calculateAndDisplayRoute()">
-  </div>
-  <div id="right-panel"></div>
+    <div id="floating-panel">
+        <strong>Start:</strong>
+        <input type="text" id="start" placeholder="Enter start location">
+        <br><br>
+        <strong>End:</strong>
+        <input type="text" id="end" placeholder="Enter end location">
+        <br><br>
+        <input type="button" value="Get Directions" onclick="calculateAndDisplayRoute()">
+    </div>
+    <div id="right-panel"></div>
+
+    <script>
+        let directionsService;
+
+        function initMap() {
+            directionsService = new google.maps.DirectionsService;
+
+            // Initialize the autocomplete fields
+            new google.maps.places.Autocomplete(document.getElementById('start'));
+            new google.maps.places.Autocomplete(document.getElementById('end'));
+        }
+
+        function calculateAndDisplayRoute() {
+            const start = document.getElementById('start').value;
+            const end = document.getElementById('end').value;
+
+            directionsService.route({
+                origin: start,
+                destination: end,
+                travelMode: google.maps.TravelMode.TRANSIT,
+                provideRouteAlternatives: true
+            }, function(response, status) {
+                if (status === google.maps.DirectionsStatus.OK) {
+                    displayRoutes(response.routes);
+                } else {
+                    window.alert('Directions request failed due to ' + status);
+                }
+            });
+        }
+
+        function displayRoutes(routes) {
+            const rightPanel = document.getElementById('right-panel');
+            rightPanel.innerHTML = '';
+            routes.forEach((route, index) => {
+                const routeDiv = document.createElement('div');
+                const leg = route.legs[0];
+                routeDiv.innerHTML = `<strong>Route ${index + 1}</strong><br>`;
+                routeDiv.innerHTML += `Total Distance: ${leg.distance.text}<br>`;
+                routeDiv.innerHTML += `Total Duration: ${leg.duration.text}<br>`;
+
+                leg.steps.forEach(step => {
+                    if (step.travel_mode === 'TRANSIT' && step.transit_details) {
+                        const transitDetails = step.transit_details;
+                        const lineName = transitDetails.line.short_name || transitDetails.line.name;
+                        routeDiv.innerHTML += `
+                            <strong>Take ${lineName}</strong><br>
+                            From ${transitDetails.departure_stop.name} to ${transitDetails.arrival_stop.name}<br>
+                            Departure: ${transitDetails.departure_time.text}<br>
+                            Arrival: ${transitDetails.arrival_time.text}<br>
+                            Number of Stops: ${transitDetails.num_stops}<br>
+                        `;
+                    } else {
+                        routeDiv.innerHTML += `${step.instructions} (${step.distance.text}, ${step.duration.text})<br>`;
+                    }
+                });
+                rightPanel.appendChild(routeDiv);
+            });
+        }
+
+        google.maps.event.addDomListener(window, 'load', initMap);
+    </script>
+</body>
 </html>
-
-
-<style>
-    html,
-    body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-    }
-    #floating-panel {
-      position: absolute;
-      top: 10px;
-      left: 25%;
-      z-index: 5;
-      background-color: #fff;
-      padding: 10px;
-      border: 1px solid #999;
-      text-align: center;
-      font-family: 'Roboto','sans-serif';
-      line-height: 30px;
-      padding-left: 10px;
-    }
-    #right-panel {
-      height: 100%;
-      float: right;
-      width: 390px;
-      overflow: auto;
-    }
-  </style>
-
-  <script> 
-let autocompleteStart, autocompleteEnd, directionsDisplay, directionsService;
-
-function initMap() {
-  directionsDisplay = new google.maps.DirectionsRenderer;
-  directionsService = new google.maps.DirectionsService;
-
-  directionsDisplay.setPanel(document.getElementById('right-panel'));
-
-  // Initialize the autocomplete fields
-  autocompleteStart = new google.maps.places.Autocomplete(document.getElementById('start'));
-  autocompleteEnd = new google.maps.places.Autocomplete(document.getElementById('end'));
-}
-
-function calculateAndDisplayRoute() {
-  const start = document.getElementById('start').value;
-  const end = document.getElementById('end').value;
-  const selectedMode = document.getElementById('mode').value;
-
-  directionsService.route({
-    origin: start,
-    destination: end,
-    travelMode: google.maps.TravelMode[selectedMode]
-  }, function(response, status) {
-    if (status === google.maps.DirectionsStatus.OK) {
-      directionsDisplay.setDirections(response);
-    } else {
-      window.alert('Directions request failed due to ' + status);
-    }
-  });
-}
-
-google.maps.event.addDomListener(window, "load", initMap);
-</script>
