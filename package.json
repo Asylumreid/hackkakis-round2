@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "pm2 start telegram-bot/bot.js --name telegram-bot",
+    "start": "pm2 start bot.js --name telegram-bot",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
