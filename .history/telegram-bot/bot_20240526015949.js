@@ -25,6 +25,7 @@ const travelOptions = [
     cost: '$2.00',
     details: 'Walk 15 min, (1.1km) to Buona Vista MRT, 🟡🟡 Train from Buona Vista to City Hall 15 min (8 Stops)👦🏻👦🏻👦🏻, \nthen walk 10 min (600m) to SMU',
     sortKey: 65,
+    url: 'https://www.google.com/maps/dir/1.2998171,103.7894319/Singapore+Management+University,+81+Victoria+St,+Singapore+188065/@1.3095107,103.7566031,12z/am=t/data=!3m2!4b1!5s0x31da17e36dd3fbc1:0x530d4d99d92acb69!4m15!4m14!1m1!4e1!1m5!1m1!1s0x31da19a38341d719:0xfe9bafb35b312b00!2m2!1d103.8501578!2d1.2962727!2m3!6e0!7e2!8j1716663600!3e3!5i2?entry=ttu'
   },
   {
     id: 3,

@@ -14,7 +14,7 @@ const travelOptions = [
     time: '58 min🚝🚝',
     cost: '$2.50',
     details: 'Walk 7 min, (500m) to One North MRT, \nTrain 🟡🟡 from One North to Buona Vista 1 min (1 Stop)👦🏻👦🏻👦🏻👦🏻,\nTrain 🟢🟢from Buona Vista to City Hall👦🏻, then walk 10 min (600m) to SMU',
-    url: 'https://www.google.com/maps/dir/1.2998171,103.7894319/Singapore+Management+University,+81+Victoria+St,+Singapore+188065/@1.3095107,103.7566031,12z/am=t/data=!3m2!4b1!5s0x31da17e36dd3fbc1:0x530d4d99d92acb69!4m14!4m13!1m1!4e1!1m5!1m1!1s0x31da19a38341d719:0xfe9bafb35b312b00!2m2!1d103.8501578!2d1.2962727!2m3!6e0!7e2!8j1716663600!3e3?entry=tts&g_ep=EgoyMDI0MDUyMi4wKgBIAVAD',
+    url: 'https://maps.app.goo.gl/5C32qFwSFNxk9h3z6'
     sortKey: 58,
     
   },
@@ -23,7 +23,7 @@ const travelOptions = [
     id: 2,
     time: '1 hr 12 min🚝',
     cost: '$2.00',
-    details: 'Walk 15 min, (1.1km) to Buona Vista MRT, 🟡🟡 Train from Buona Vista to City Hall 15 min (8 Stops)👦🏻👦🏻👦🏻, \nthen walk 10 min (600m) to SMU',
+    details: 'Walk 15 min, (1.1km) to Buona Vista MRT, Train from Buona Vista to City Hall 15 min (8 Stops), then walk 10 min (600m) to SMU',
     sortKey: 65,
   },
   {
@@ -87,10 +87,7 @@ function displayTripDetails(chatId, optionId) {
   if (option) {
     bot.sendMessage(chatId, `Details for Option ${option.id}:\nTime: ${option.time}\nCost: ${option.cost}\nDetails: ${option.details}`, {
       reply_markup: {
-      
-        inline_keyboard: [
-        [{ text: 'View Route on Google Maps', url: option.url }],
-        [{ text: 'Back to Main Menu', callback_data: 'mainmenu' }]],
+        inline_keyboard: [[{ text: 'Back to Main Menu', callback_data: 'mainmenu' }]],
       },
     });
 
@@ -98,15 +95,15 @@ function displayTripDetails(chatId, optionId) {
     if (option.id === 1) {
       setTimeout(() => {
         bot.sendMessage(chatId, 'The next stop is Buona Vista, please alight now.');
-      }, 15000); // 5 seconds
+      }, 5000); // 5 seconds
 
       setTimeout(() => {
         bot.sendMessage(chatId, 'The next stop is City Hall, please alight now.');
-      }, 25000); // 10 seconds
+      }, 10000); // 10 seconds
 
       setTimeout(() => {
         bot.sendMessage(chatId, 'You are near your destination.');
-      }, 30000); // 15 seconds
+      }, 15000); // 15 seconds
 
       setTimeout(() => {
         bot.sendMessage(chatId, 'Have you arrived?', {
@@ -116,7 +113,7 @@ function displayTripDetails(chatId, optionId) {
             ]
           }
         });
-      }, 35000); // 20 seconds
+      }, 20000); // 20 seconds
     }
   } else {
     bot.sendMessage(chatId, 'Invalid option selected.', {
@@ -126,7 +123,6 @@ function displayTripDetails(chatId, optionId) {
     });
   }
 }
-
 
 // Handle callback queries from inline buttons
 bot.on('callback_query', (callbackQuery) => {
@@ -257,8 +253,6 @@ bot.on('message', (msg) => {
     });
   }
 });
-
-
 
 // Gracefully handle errors
 bot.on('polling_error', (error) => {
