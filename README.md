@@ -1,7 +1,7 @@
 # Pathfinder - Public Transport Bot
 ## Team Angel Kakis
 
-Pathfinder is a Telegram bot designed to help users plan their public transport routes, provide feedback, and more. This bot leverages the Telegram Bot API and can be deployed on an AWS EC2 instance.
+Pathfinder is a Telegram bot designed to help users plan their public transport routes, provide feedback, and more. This bot leverages the Telegram Bot API and Google Maps API to provide users with efficient and comprehensive public transport routes. Additionally, the chatbot integrates functionalities using the LTA DataMall API to check occupancy levels. It also provides fare price calculations and route complexity assessments, ensuring a personalized and user-friendly commuter experience. Pathfinder can be deployed on an AWS EC2 instance.
 
 ## Features
 
