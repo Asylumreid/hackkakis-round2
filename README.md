@@ -10,7 +10,46 @@ Pathfinder is a Telegram bot designed to help users plan their public transport 
 - View detailed trip information
 - Provide feedback with ratings
 - Real-time notifications during the trip
+  
+## Hackathon Track 3
 
+## Tech Stack and API Integration
+### Tech Stack
+#### Programming Language:
+
+- JavaScript: Used for bot logic and API interactions.
+Runtime Environment:
+
+- Node.js: Server-side runtime environment to execute JavaScript code.
+Bot Framework:
+
+- Telegram Bot API: Enables interaction with users on Telegram.
+Hosting Platform:
+
+- AWS EC2: Provides scalable cloud computing capacity to deploy and run the bot.
+Process Manager:
+
+- PM2: Keeps the bot running continuously and handles automatic restarts.
+  
+### API Integrations
+#### Google Maps API:
+- Provides route planning, step-by-step directions, fare price calculations, and route complexity assessments.
+  
+Endpoints Used:
+- Directions API: For fetching detailed routes and travel information.
+- Geocoding API: For converting addresses into geographic coordinates.
+- Places API: For place autocomplete functionality to assist users in entering locations.
+  
+#### LTA DataMall API:
+- Fetches real-time occupancy data for public transport vehicles.
+- Fetches bus routes for calculation of fares based on distance. 
+
+Endpoints Used:
+- Bus Occupancy API: For retreiving the passenger volume on buses based on day and stops 
+- Train Occupancy API: For retrieving the passenger volume on train based on day and stops
+- Bus Routes  API: For fetching detailed route information for all bus services
+- Train Routes  API: For fetching detailed route information for all train services 
+  
 ## Prerequisites
 
 - Node.js and npm installed
@@ -147,3 +186,7 @@ Feel free to open issues or submit pull requests if you have suggestions or impr
 ## License
 
 This project is licensed under the MIT License.
+
+
+
+
